@@ -23,7 +23,7 @@ import java.time.OffsetDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,7 @@ public class User {
     private String role = "ROLE_USER";
 
     @CreationTimestamp
-    private OffsetDateTime createTimestamp;
+    private OffsetDateTime createdTimestamp;
 
     @UpdateTimestamp
     private OffsetDateTime updatedTimestamp;
