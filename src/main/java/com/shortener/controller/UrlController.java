@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.shortener.model.response.UrlResponse;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -27,5 +27,20 @@ public class UrlController {
     ) {
         ShortenResponse response = urlService.shortenUrl(shortenRequest, userEmail);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/urls")
+    public ResponseEntity<List<UrlResponse>> getUserUrls(@AuthenticationPrincipal String userEmail) {
+        List<UrlResponse> urls = urlService.getUserUrls(userEmail);
+        return ResponseEntity.ok(urls);
+    }
+
+    @DeleteMapping("/urls/{id}")
+    public ResponseEntity<Void> deleteUrl(
+            @PathVariable Long id,
+            @AuthenticationPrincipal String userEmail
+    ) {
+        urlService.deactivateUrl(id, userEmail);
+        return ResponseEntity.noContent().build();
     }
 }

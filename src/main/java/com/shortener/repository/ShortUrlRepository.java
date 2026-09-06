@@ -7,8 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ShortUrlRepository extends JpaRepository<ShortUrl ,Long> {
+public interface ShortUrlRepository extends JpaRepository<ShortUrl, Long> {
 
     boolean existsByShortCode(String shortCode);
 
+    Optional<ShortUrl> findByShortCode(String shortCode);
+
+    List<ShortUrl> findByUserIdOrderByCreatedTimestampDesc(Long userId);
+
+    Optional<ShortUrl> findByIdAndUserId(Long id, Long userId);
 }

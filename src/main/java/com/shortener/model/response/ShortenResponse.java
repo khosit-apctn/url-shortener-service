@@ -8,6 +8,5 @@ import lombok.Data;
 @Builder
 public class ShortenResponse {
 
-    @JsonProperty("short_url")
     private String shortUrl;
 }
