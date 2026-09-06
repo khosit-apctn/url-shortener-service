@@ -28,12 +28,17 @@ The service provides core URL shortening features similar to Bitly or TinyURL, i
 
 ---
 
-## Database Migrations (Flyway)
+## Database Migrations & Indexes (Flyway)
 
-Database tables are managed automatically by Flyway upon application startup:
+Database schema and indexes are managed automatically by Flyway upon application startup:
 
 - `V1__createTableUsers.sql`: Creates `users` table.
 - `V2__createTableShortUrls.sql`: Creates `short_urls` table with foreign key to `users`.
+- `V3__addIndexOnUserId.sql`: Adds B-tree index `idx_short_urls_user_id` on `short_urls(user_id)`.
+
+### Indexing Strategy:
+- **`short_code` (Unique Index)**: Created automatically via the `UNIQUE` constraint in `V2`. Optimizes redirect lookups (`GET /r/{shortCode}`) to $O(1)$ and guarantees unique short codes.
+- **`user_id` (`idx_short_urls_user_id`)**: Created in `V3`. Optimizes user URL queries (`GET /api/urls`, `DELETE /api/urls/{id}`) ordered by creation date, preventing full table scans as data grows.
 
 ---
 
