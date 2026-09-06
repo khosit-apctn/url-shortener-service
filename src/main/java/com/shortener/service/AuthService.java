@@ -45,7 +45,6 @@ public class AuthService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
     public AuthResponse login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail().trim().toLowerCase();
 

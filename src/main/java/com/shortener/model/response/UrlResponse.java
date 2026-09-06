@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 public class UrlResponse {
 
     private String shortUrl;
-
     private String originalUrl;
-
-    private boolean isActive;
+    private Boolean isActive;
 
 }
