@@ -1,15 +1,15 @@
 package com.shortener.repository;
 
-import com.shortener.model.db.Users;
+import com.shortener.model.db.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByEmail(String email);
 
-    Optional<Users> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

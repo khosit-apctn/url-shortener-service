@@ -1,7 +1,7 @@
 package com.shortener.service;
 
+import com.shortener.model.db.User;
 import com.shortener.security.JwtTokenProvider;
-import com.shortener.model.db.Users;
 import com.shortener.model.request.LoginRequest;
 import com.shortener.model.request.RegisterRequest;
 import com.shortener.model.response.AuthResponse;
@@ -28,20 +28,20 @@ public class AuthService {
 
         String hashedPassword = passwordEncoder.encode(registerRequest.getPassword());
 
-        Users users = Users.builder()
+        User user = User.builder()
                 .email(email)
                 .password(hashedPassword)
                 .role("ROLE_USER")
                 .build();
 
-        Users savedUsers = userRepository.save(users);
+        User savedUser = userRepository.save(user);
 
-        String token = tokenProvider.generateToken(savedUsers.getEmail(), savedUsers.getId());
+        String token = tokenProvider.generateToken(savedUser.getEmail(), savedUser.getId());
 
         return AuthResponse.builder()
                 .token(token)
                 .tokenType("Bearer")
-                .email(savedUsers.getEmail())
+                .email(savedUser.getEmail())
                 .build();
     }
 
@@ -49,19 +49,19 @@ public class AuthService {
     public AuthResponse login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail().trim().toLowerCase();
 
-        Users users = userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
 
-        if (!passwordEncoder.matches(loginRequest.getPassword(), users.getPassword())) {
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Invalid email or password");
         }
 
-        String token = tokenProvider.generateToken(users.getEmail(), users.getId());
+        String token = tokenProvider.generateToken(user.getEmail(), user.getId());
 
         return AuthResponse.builder()
                 .token(token)
                 .tokenType("Bearer")
-                .email(users.getEmail())
+                .email(user.getEmail())
                 .build();
     }
 }

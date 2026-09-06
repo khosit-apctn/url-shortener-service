@@ -17,13 +17,14 @@ import java.time.OffsetDateTime;
 
 
 @Entity
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @DynamicUpdate
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
