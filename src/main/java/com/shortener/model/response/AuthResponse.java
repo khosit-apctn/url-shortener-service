@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResponse {
-    private String token;
 
+    private String token;
     @Builder.Default
     private String tokenType = "Bearer";
-
     private String email;
+
 }
