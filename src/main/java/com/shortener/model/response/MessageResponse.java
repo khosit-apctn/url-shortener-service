@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UrlResponse {
+public class MessageResponse {
 
-    private Long id;
-    private String shortCode;
-    private String shortUrl;
-    private String originalUrl;
-    private Boolean isActive;
-
+    private String message;
 }

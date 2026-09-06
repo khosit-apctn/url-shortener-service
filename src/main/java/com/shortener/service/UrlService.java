@@ -67,6 +67,8 @@ public class UrlService {
                 .map(shortUrl -> {
                     String fullShortUrl = UrlHelper.buildFullShortUrl(baseUrl, shortUrl.getShortCode());
                     return UrlResponse.builder()
+                            .id(shortUrl.getId())
+                            .shortCode(shortUrl.getShortCode())
                             .shortUrl(fullShortUrl)
                             .originalUrl(shortUrl.getOriginalUrl())
                             .isActive(shortUrl.isActive())

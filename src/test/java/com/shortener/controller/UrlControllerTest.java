@@ -89,13 +89,17 @@ class UrlControllerTest {
     @DisplayName("GET /api/urls should return 200 OK with user URLs")
     void test_getUserUrls_success_returnUserUrls() throws Exception {
         UrlResponse urlResponse1 = UrlResponse.builder()
-                .shortUrl("http://localhost:8080/r/shortUrl1")
+                .id(1L)
+                .shortCode("shortCode1")
+                .shortUrl("http://localhost:8080/r/shortCode1")
                 .originalUrl("https://example.com/originalUrl1")
                 .isActive(true)
                 .build();
 
         UrlResponse urlResponse2 = UrlResponse.builder()
-                .shortUrl("http://localhost:8080/r/shortUrl2")
+                .id(2L)
+                .shortCode("shortCode2")
+                .shortUrl("http://localhost:8080/r/shortCode2")
                 .originalUrl("https://example.com/originalUrl2")
                 .isActive(false)
                 .build();
@@ -107,9 +111,13 @@ class UrlControllerTest {
         mockMvc.perform(get("/api/urls"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(urlResponse1.getId()))
+                .andExpect(jsonPath("$[0].shortCode").value(urlResponse1.getShortCode()))
                 .andExpect(jsonPath("$[0].shortUrl").value(urlResponse1.getShortUrl()))
                 .andExpect(jsonPath("$[0].originalUrl").value(urlResponse1.getOriginalUrl()))
                 .andExpect(jsonPath("$[0].isActive").value(urlResponse1.getIsActive()))
+                .andExpect(jsonPath("$[1].id").value(urlResponse2.getId()))
+                .andExpect(jsonPath("$[1].shortCode").value(urlResponse2.getShortCode()))
                 .andExpect(jsonPath("$[1].shortUrl").value(urlResponse2.getShortUrl()))
                 .andExpect(jsonPath("$[1].originalUrl").value(urlResponse2.getOriginalUrl()))
                 .andExpect(jsonPath("$[1].isActive").value(urlResponse2.getIsActive()));

@@ -172,6 +172,8 @@ class UrlServiceTest {
         List<UrlResponse> responses = urlService.getUserUrls(email);
 
         UrlResponse expectedResponse = UrlResponse.builder()
+                .id(1L)
+                .shortCode("code1")
                 .shortUrl("http://localhost:8080/r/code1")
                 .originalUrl("https://site1.com")
                 .isActive(true)

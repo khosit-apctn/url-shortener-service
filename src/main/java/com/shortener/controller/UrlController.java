@@ -37,7 +37,7 @@ public class UrlController {
 
     @DeleteMapping("/urls/{id}")
     public ResponseEntity<Void> deleteUrl(
-            @PathVariable Long id,
+            @PathVariable @Valid Long id,
             @AuthenticationPrincipal String userEmail
     ) {
         urlService.deactivateUrl(id, userEmail);
